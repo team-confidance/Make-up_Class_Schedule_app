@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/notification_screen.dart';
 import 'package:flutter_app/routine_screen.dart';
 import 'package:flutter_app/settings_screen.dart';
 
 import 'home_screen.dart';
+import 'login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,31 +26,51 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SafeArea(
-        child: Scaffold(
+      home: Builder(
+        builder: (context) => SafeArea(
+          child: Scaffold(
             appBar: AppBar(
               title: Text(s),
               centerTitle: true,
               actions: <Widget>[
-                IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
-                IconButton(icon: Icon(Icons.logout), onPressed: () {})
+                IconButton(
+                    icon: Icon(Icons.notifications),
+                    onPressed: () {
+                      print("Clicked on Notification");
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NotificationScreen()));
+                    }),
+                IconButton(icon: Icon(Icons.logout), onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LoginScreen()));
+                })
               ],
             ),
             body: tabs[_currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            type: BottomNavigationBarType.shifting,
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: Colors.blue),
-              BottomNavigationBarItem(icon: Icon(Icons.search), label: "Routine", backgroundColor: Colors.red),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: "Settings", backgroundColor: Colors.orange),
-            ],
-            onTap: (index){
-              setState(() {
-                _currentIndex=index;
-                s=titles[_currentIndex];
-              });
-            },
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _currentIndex,
+              type: BottomNavigationBarType.shifting,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.badge),
+                    label: "Home",
+                    backgroundColor: Colors.blue),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.ballot),
+                    label: "Routine",
+                    backgroundColor: Colors.red),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: "Settings",
+                    backgroundColor: Colors.orange),
+              ],
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                  s = titles[_currentIndex];
+                });
+              },
+            ),
           ),
         ),
       ),

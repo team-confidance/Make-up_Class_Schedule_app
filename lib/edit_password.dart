@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'login_screen.dart';
+
 class EditPassword extends StatefulWidget {
   @override
   _EditPasswordState createState() => _EditPasswordState();
@@ -12,6 +14,15 @@ class _EditPasswordState extends State<EditPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          //title: Text(""),
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.logout), onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => LoginScreen()));
+            })
+          ],
+        ),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
           child: Column(

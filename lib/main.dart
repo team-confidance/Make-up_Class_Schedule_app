@@ -5,6 +5,7 @@ import 'package:flutter_app/settings_screen.dart';
 
 import 'home_screen.dart';
 import 'login_screen.dart';
+import 'routine_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,8 @@ class _MyAppState extends State<MyApp> {
     RoutineScreen(),
     SettingsScreen(),
   ];
+
+  final PageStorageBucket bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +49,102 @@ class _MyAppState extends State<MyApp> {
                 })
               ],
             ),
-            body: tabs[_currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
+            body: PageStorage(
+              child: tabs[_currentIndex],
+              bucket: bucket,
+            ),
+
+            /*body: tabs[_currentIndex],*/
+
+            floatingActionButton: FloatingActionButton(
+              child: Icon(
+                  Icons.ballot,
+                  color: _currentIndex == 1 ? Colors.blue : Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 1;
+                  s = titles[_currentIndex];
+                });
+              },
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: BottomAppBar(
+              shape: CircularNotchedRectangle(),
+              notchMargin: 5,
+              child: Container(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              _currentIndex = 0;
+                              s = titles[_currentIndex];
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.badge,
+                                color: _currentIndex == 0 ? Colors.blue : Colors.grey,
+                              ),
+                              Text(
+                                'Home',
+                                style: TextStyle(
+                                  color: _currentIndex == 0 ? Colors.blue : Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Right Tab bar icons
+
+                    Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              _currentIndex = 2;
+                              s = titles[_currentIndex];
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.person,
+                                color: _currentIndex == 2 ? Colors.blue : Colors.grey,
+                              ),
+                              Text(
+                                'Profile',
+                                style: TextStyle(
+                                  color: _currentIndex == 2 ? Colors.blue : Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+
+            /*bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.shifting,
               items: [
@@ -70,7 +167,7 @@ class _MyAppState extends State<MyApp> {
                   s = titles[_currentIndex];
                 });
               },
-            ),
+            ),*/
           ),
         ),
       ),

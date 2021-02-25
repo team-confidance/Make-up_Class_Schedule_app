@@ -31,6 +31,7 @@ dependencies:
   syncfusion_flutter_calendar: ^18.4.44
   fluttertoast: ^7.1.6
   firebase_core: "0.7.0"
+  firebase_auth: "^0.20.1"
 
 dev_dependencies:
   flutter_test:

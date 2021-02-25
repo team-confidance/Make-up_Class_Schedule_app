@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/login_fragment.dart';
 import 'package:flutter_app/signup_fragment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.signOut();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

@@ -4,6 +4,7 @@ import 'package:flutter_app/login_screen.dart';
 import 'package:flutter_app/notification_screen.dart';
 import 'package:flutter_app/routine_screen.dart';
 import 'package:flutter_app/settings_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -36,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
                         builder: (context) => NotificationScreen()));
                   }),
               IconButton(icon: Icon(Icons.logout), onPressed: () {
+                FirebaseAuth.instance.signOut();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => LoginScreen()));
               })

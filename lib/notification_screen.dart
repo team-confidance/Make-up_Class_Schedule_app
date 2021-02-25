@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'login_screen.dart';
 
@@ -22,6 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             IconButton(
                 icon: Icon(Icons.logout),
                 onPressed: () {
+                  FirebaseAuth.instance.signOut();
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => LoginScreen()));
                 })

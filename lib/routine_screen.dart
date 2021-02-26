@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import 'available_screen.dart';
+import 'model/item_tile.dart';
+
 class RoutineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -9,55 +12,41 @@ class RoutineScreen extends StatelessWidget {
     var _height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
+          height: _height,
           decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
-      children: <Widget>[
+        children: <Widget>[
           Container(
-              child: SfCalendar(
-                view: CalendarView.month,
-              ),
+            margin: EdgeInsets.symmetric(vertical: 20),
+            height: 200,
+            child: SfCalendar(
+              view: CalendarView.month,
             ),
-          Container(
-            height: 350,
-            width: _width,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("18 February", style: TextStyle(fontSize: 26)),
+              IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AvailableScreen()));
+                  }),
+            ],
+          ),
+          Expanded(
             child: ListView.builder(
               itemCount: dummyData.length,
-              itemBuilder: (context, i) => Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: ClipPath(
-                      clipper: ShapeBorderClipper(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: ListTile(
-                        tileColor: Colors.grey,
-                        title: Text(dummyData[i].courseId),
-                        subtitle: Row(
-                          children: <Widget>[
-                            Icon(Icons.lock_clock),
-                            Text(dummyData[i].timeFrom +
-                                "-" +
-                                dummyData[i].durationMin.toString()),
-                            Icon(Icons.network_cell),
-                            Text(dummyData[i].status)
-                          ],
-                        ),
-                        leading: CircleAvatar(
-                          child: Text(dummyData[i].roomNo.toString()),
-                        ),
-                        onTap: () {
-                          print("Clicked$i");
-                        },
-                      ),
-                    ),
-                  )
-                ],
+              itemBuilder: (context, i) => Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: ItemTile(dummyData[i]),
               ),
             ),
           ),
-      ],
-    ),
-        ));
+        ],
+      ),
+    ));
   }
 }

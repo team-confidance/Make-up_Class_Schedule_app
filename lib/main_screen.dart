@@ -21,8 +21,6 @@ class _MainScreenState extends State<MainScreen> {
     SettingsScreen(),
   ];
 
-  final PageStorageBucket bucket = PageStorageBucket();
-
   @override
   Widget build(BuildContext context) {
 
@@ -51,11 +49,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
           body: PageStorage(
             child: tabs[_currentIndex],
-            bucket: bucket,
+            bucket: PageStorageBucket(),
           ),
-
           /*body: tabs[_currentIndex],*/
-
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.ballot,

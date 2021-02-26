@@ -124,6 +124,7 @@ class _SignupFragmentState extends State<SignupFragment> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 20),
       child: Column(
           children: [
             TextField(

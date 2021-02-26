@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/available_screen.dart';
+import 'package:flutter_app/model/item_tile.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,14 +10,14 @@ class HomeScreen extends StatelessWidget {
     var _height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
+          height: _height,
           decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
           children: <Widget>[
             Container(
               height: 150,
               width: _width,
-              margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.blueAccent,
                 borderRadius: BorderRadius.circular(20),
@@ -37,42 +38,13 @@ class HomeScreen extends StatelessWidget {
                       }),
                 ],
               ),
-              Container(
-                height: 400,
-                width: _width,
+              Expanded(
+                //height: 500,
                 child: ListView.builder(
                   itemCount: dummyData.length,
-                  itemBuilder: (context, i) => Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: ClipPath(
-                          clipper: ShapeBorderClipper(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          child: ListTile(
-                            tileColor: Colors.grey,
-                            title: Text(dummyData[i].courseId),
-                            subtitle: Row(
-                              children: <Widget>[
-                                Icon(Icons.lock_clock),
-                                Text(dummyData[i].timeFrom +
-                                    "-" +
-                                    dummyData[i].durationMin.toString()),
-                                Icon(Icons.network_cell),
-                                Text(dummyData[i].status)
-                              ],
-                            ),
-                            leading: CircleAvatar(
-                              child: Text(dummyData[i].roomNo.toString()),
-                            ),
-                            onTap: () {
-                              print("Clicked$i");
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                  itemBuilder: (context, i) => Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    child: ItemTile(dummyData[i]),
                   ),
                 ),
               ),

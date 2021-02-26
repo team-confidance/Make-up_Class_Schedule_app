@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/item_tile.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,7 +18,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Notifications"),
+          title: Text("Available Rooms"),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -30,41 +31,14 @@ class _AvailableScreenState extends State<AvailableScreen> {
           ],
         ),
         body: Container(
+          decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
           height: _height,
           width: _width,
           child: ListView.builder(
             itemCount: dummyData.length,
-            itemBuilder: (context, i) => Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: ClipPath(
-                    clipper: ShapeBorderClipper(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    child: ListTile(
-                      tileColor: Colors.grey,
-                      title: Text(dummyData[i].courseId),
-                      subtitle: Row(
-                        children: <Widget>[
-                          Icon(Icons.lock_clock),
-                          Text(dummyData[i].timeFrom +
-                              "-" +
-                              dummyData[i].durationMin.toString()),
-                          Icon(Icons.network_cell),
-                          Text(dummyData[i].status)
-                        ],
-                      ),
-                      leading: CircleAvatar(
-                        child: Text(dummyData[i].roomNo.toString()),
-                      ),
-                      onTap: () {
-                        print("Clicked$i");
-                      },
-                    ),
-                  ),
-                )
-              ],
+            itemBuilder: (context, i) => Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: ItemTile(dummyData[i]),
             ),
           ),
         ),

@@ -56,10 +56,14 @@ flutter:
     #- images/a_dot_ham.jpeg
     - assets/images/
   fonts:
-    - family: Nunito
+    - family: Digital
       fonts:
-        - asset: assets/fonts/Nunito-Regular.ttf
-        - asset: assets/fonts/Nunito-Bold.ttf
+        - asset: assets/fonts/Digital-Clock.ttf
+    - family: Square-Sans-Serif
+      fonts:
+        - asset: assets/fonts/Square-Sans-Serif.ttf
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

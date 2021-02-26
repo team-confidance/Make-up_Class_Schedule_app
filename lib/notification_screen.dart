@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'login_screen.dart';
+import 'auth_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -24,8 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 icon: Icon(Icons.logout),
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (r) => false);
                 })
           ],
         ),

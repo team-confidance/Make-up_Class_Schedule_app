@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'login_screen.dart';
+import 'auth_screen.dart';
 
 class EditPassword extends StatefulWidget {
   @override
@@ -18,8 +19,8 @@ class _EditPasswordState extends State<EditPassword> {
           //title: Text(""),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.logout), onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => LoginScreen()));
+              FirebaseAuth.instance.signOut();
+              Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (r) => false);
             })
           ],
         ),

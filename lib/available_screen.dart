@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'login_screen.dart';
+import 'auth_screen.dart';
 
 class AvailableScreen extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => AuthScreen()));
                 })
           ],
         ),

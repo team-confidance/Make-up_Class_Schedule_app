@@ -3,12 +3,12 @@ import 'package:flutter_app/login_fragment.dart';
 import 'package:flutter_app/signup_fragment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
+class AuthScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   var cornarR = 50.0;
   var btnSignUpColor = Color(0xFFFFFFFF);
   var btnLoginColor = Color(0xFFFEACB6);

@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/home_screen.dart';
-import 'package:flutter_app/login_screen.dart';
+import 'package:flutter_app/auth_screen.dart';
 import 'package:flutter_app/notification_screen.dart';
 import 'package:flutter_app/routine_screen.dart';
 import 'package:flutter_app/settings_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -45,17 +45,16 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.logout),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (r) => false);
               })
-        ],
-      ),
-      body: PageStorage(
-        child: tabs[_currentIndex],
-        bucket: bucket,
-      ),
+            ],
+          ),
+          body: PageStorage(
+            child: tabs[_currentIndex],
+            bucket: bucket,
+          ),
 
-      /*body: tabs[_currentIndex],*/
+          /*body: tabs[_currentIndex],*/
 
       floatingActionButton: FloatingActionButton(
         child: Icon(
@@ -112,7 +111,7 @@ class _MainScreenState extends State<MainScreen> {
                   ],
                 ),
 
-                // Right Tab bar icons
+                  // Right Tab bar icons
 
                 Row(
                   // crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/login_screen.dart';
+import 'package:flutter_app/auth_screen.dart';
 import 'package:flutter_app/main_screen.dart';
 
 class LandingPage extends StatelessWidget {
@@ -40,8 +40,8 @@ class LandingPage extends StatelessWidget {
               }
               if(streamSnapshot.connectionState == ConnectionState.active){
                 User _user = streamSnapshot.data;
-                if(_user == null){
-                  return LoginScreen();
+                if(_user == null || !(_user.emailVerified)){
+                  return AuthScreen();
                 }
                 else{
                   return MainScreen();

@@ -1,4 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/auth_screen.dart';
+import 'package:flutter_app/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,7 +23,7 @@ class _SignupFragmentState extends State<SignupFragment> {
             ),
             actions: [
               FlatButton(
-                child: Text('Close Dialog'),
+                child: Text('Close'),
                 onPressed: (){
                   Navigator.pop(context);
                 },
@@ -36,6 +39,18 @@ class _SignupFragmentState extends State<SignupFragment> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _registerEmail, password: _registerPassword
       );
+      var user = await FirebaseAuth.instance.currentUser;
+
+      FirebaseDatabase.instance.reference().child("UserInfo").child(user.uid).set(
+        {
+          "FirstName" : _registerFirstName,
+          "LastName" : _registerLastName,
+          "email" : _registerEmail,
+          "phone" : _registerPhoneNumber,
+        }
+      );
+
+      user.sendEmailVerification();
       return null;
     } on FirebaseAuthException catch(e){
       if(e.code == "weak-password"){
@@ -45,11 +60,13 @@ class _SignupFragmentState extends State<SignupFragment> {
         return "Email is already in use";
       }
       else{
-        return "Error occured while signing up!";
+        return e.code.toString();
+
       }
     }
     catch(e){
       print(e.toString());
+      return "Error occured while signing up!";
     }
   }
 
@@ -67,9 +84,19 @@ class _SignupFragmentState extends State<SignupFragment> {
       });
     }
     else{
-      Navigator.pop(context);
+      _goToMain();
     }
   }
+
+  void _goToMain(){
+    // Navigator.pushNamedAndRemoveUntil(context, "/main", (r) => false);
+    // setState(() {});
+    // Navigator.pop(context);  // pop current page
+    Navigator.pushNamed(context, "/main_screen");
+    setState(() {
+    });
+  }
+
 
   bool _registerFormLoading = false;
   String _registerEmail = "";

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/auth_screen.dart';
+import 'package:flutter_app/main.dart';
+import 'package:flutter_app/main_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,6 +11,7 @@ class LoginFragment extends StatefulWidget {
 }
 
 class _LoginFragmentState extends State<LoginFragment> {
+  // var _goToMain = false;
 
   Future<void> _alertDialogBuilder(String error) async{
     return showDialog(
@@ -15,7 +19,7 @@ class _LoginFragmentState extends State<LoginFragment> {
         barrierDismissible: false,
         builder: (context){
           return AlertDialog(
-            title: Text("Erro"),
+            title: Text("Error"),
             content: Container(
               child: Text(error),
             ),
@@ -37,7 +41,13 @@ class _LoginFragmentState extends State<LoginFragment> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _loginEmail, password: _loginPassword
       );
-      return null;
+      var user = await FirebaseAuth.instance.currentUser;
+      if(user.emailVerified){
+        return null;
+      }
+      else{
+        return "Please varify your email.";
+      }
     } on FirebaseAuthException catch(e){
       if(e.code == "weak-password"){
         return "Eassword is weak!";
@@ -46,11 +56,12 @@ class _LoginFragmentState extends State<LoginFragment> {
         return "Email is already in use!";
       }
       else{
-        return "Error occured when login!";
+        return e.message.toString();
       }
     }
     catch(e){
       print(e.toString());
+      return "Error occured while signing up!";
     }
   }
 
@@ -66,6 +77,11 @@ class _LoginFragmentState extends State<LoginFragment> {
       setState(() {
         _loginFormLoading = false;
       });
+    }
+    else{
+      // Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (r) => false);
+      Navigator.pop(context);  // pop current page
+      Navigator.pushNamed(context, "/main");
     }
   }
 

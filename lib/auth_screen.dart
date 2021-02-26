@@ -14,7 +14,18 @@ class _AuthScreenState extends State<AuthScreen> {
   var btnLoginColor = Color(0xFFFEACB6);
 
   final tabs=[LoginFragment(), SignupFragment()];
-  var pos=0;
+  static var pos=0;
+  
+  /*@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  final changePos = () => {
+    setState(() {
+      pos = 0;
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {

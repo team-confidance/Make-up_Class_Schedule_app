@@ -4,6 +4,7 @@ import 'package:flutter_app/main.dart';
 import 'package:flutter_app/main_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/auth_screen.dart';
 
 class LoginFragment extends StatefulWidget {
   @override
@@ -25,11 +26,18 @@ class _LoginFragmentState extends State<LoginFragment> {
             ),
             actions: [
               FlatButton(
-                child: Text('Close Dialog'),
+                child: Text('Close'),
                 onPressed: (){
                   Navigator.pop(context);
                 },
               ),
+              /*FlatButton(
+                child: Text('Send Varification Again'),
+                onPressed: (){
+                  FirebaseAuth.instance.currentUser.sendEmailVerification();
+                  Navigator.pop(context);
+                },
+              ),*/
             ],
           );
         }

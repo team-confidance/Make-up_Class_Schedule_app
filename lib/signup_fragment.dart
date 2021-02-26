@@ -4,6 +4,7 @@ import 'package:flutter_app/auth_screen.dart';
 import 'package:flutter_app/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/auth_screen.dart';
 
 class SignupFragment extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class SignupFragment extends StatefulWidget {
 }
 
 class _SignupFragmentState extends State<SignupFragment> {
+
   Future<void> _alertDialogBuilder(String error) async{
     return showDialog(
         context: context,
@@ -33,24 +35,34 @@ class _SignupFragmentState extends State<SignupFragment> {
         }
     );
   }
+  Future<void> _showSuccessDialog () async{
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Successful!"),
+            content: Container(
+              child: Text("Please varify your email and sign sign in."),
+            ),
+            actions: [
+              FlatButton(
+                child: Text('Close'),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
 
   Future<String> _createAccount() async{
     try{
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _registerEmail, password: _registerPassword
       );
-      var user = await FirebaseAuth.instance.currentUser;
-
-      FirebaseDatabase.instance.reference().child("UserInfo").child(user.uid).set(
-        {
-          "FirstName" : _registerFirstName,
-          "LastName" : _registerLastName,
-          "email" : _registerEmail,
-          "phone" : _registerPhoneNumber,
-        }
-      );
-
-      user.sendEmailVerification();
       return null;
     } on FirebaseAuthException catch(e){
       if(e.code == "weak-password"){
@@ -70,6 +82,27 @@ class _SignupFragmentState extends State<SignupFragment> {
     }
   }
 
+  Future<String> _saveUserInfo() async{
+    try{
+      var user = FirebaseAuth.instance.currentUser;
+      await FirebaseDatabase.instance.reference().child("UserInfo").child(user.uid).set(
+          {
+            "FirstName" : _registerFirstName,
+            "LastName" : _registerLastName,
+            "email" : _registerEmail,
+            "phone" : _registerPhoneNumber,
+          }
+      );
+      return null;
+    }on FirebaseException catch(e){
+      return e.message.toString();
+    }
+    catch(e){
+      print(e.toString());
+      return "Error occured!";
+    }
+  }
+
   void _submitForm() async{
     setState(() {
       _registerFormLoading = true;
@@ -77,24 +110,42 @@ class _SignupFragmentState extends State<SignupFragment> {
 
     String _createAccountFeedback = await _createAccount();
     if(_createAccountFeedback != null){
-      _alertDialogBuilder(_createAccountFeedback);
+      _alertDialogBuilder("Creating user error: $_createAccountFeedback");
 
       setState(() {
         _registerFormLoading = false;
       });
     }
     else{
-      _goToMain();
+      String _saveUserInfoFeedback = await _saveUserInfo();
+      if(_saveUserInfoFeedback != null){
+        _alertDialogBuilder("User Info Saving Error: $_saveUserInfoFeedback");
+
+        setState(() {
+          _registerFormLoading = false;
+        });
+      }
+      else{
+        try{
+          var user = FirebaseAuth.instance.currentUser;
+          user.sendEmailVerification();
+        }
+        catch(e){
+          _goToMain();
+        }
+      }
     }
   }
 
   void _goToMain(){
     // Navigator.pushNamedAndRemoveUntil(context, "/main", (r) => false);
     // setState(() {});
-    // Navigator.pop(context);  // pop current page
-    Navigator.pushNamed(context, "/main_screen");
+    // Navigator.pop(context);  // pop current pages
     setState(() {
+      _registerFormLoading = false;
     });
+    _showSuccessDialog();
+    Navigator.pushNamed(context, "/main_screen");
   }
 
 
@@ -123,119 +174,128 @@ class _SignupFragmentState extends State<SignupFragment> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "First name",
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Container(
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "First name",
+                ),
+                maxLength: 20,
+                style: TextStyle(fontSize: 24),
+                onChanged: (value){
+                  _registerFirstName = value;
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 20,
-              style: TextStyle(fontSize: 24),
-              onChanged: (value){
-                _registerFirstName = value;
-              },
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "Last name",
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "Last name",
+                ),
+                maxLength: 20,
+                style: TextStyle(fontSize: 24),
+                onChanged: (value){
+                  _registerLastName = value;
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 20,
-              style: TextStyle(fontSize: 24),
-              onChanged: (value){
-                _registerLastName = value;
-              },
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "Email Address",
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "Email Address",
+                ),
+                maxLength: 50,
+                style: TextStyle(fontSize: 24),
+                onChanged: (value){
+                  _registerEmail = value;
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 50,
-              style: TextStyle(fontSize: 24),
-              onChanged: (value){
-                _registerEmail = value;
-              },
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "Phone Number",
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "Phone Number",
+                ),
+                maxLength: 14,
+                style: TextStyle(fontSize: 24),
+                keyboardType: TextInputType.number,
+                onChanged: (value){
+                  _registerPhoneNumber = value;
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 14,
-              style: TextStyle(fontSize: 24),
-              keyboardType: TextInputType.number,
-              onChanged: (value){
-                _registerPhoneNumber = value;
-              },
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "Password",
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "Password",
+                ),
+                maxLength: 32,
+                style: TextStyle(fontSize: 24),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                onChanged: (value){
+                  _registerPassword = value;
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 32,
-              style: TextStyle(fontSize: 24),
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              onChanged: (value){
-                _registerPassword = value;
-              },
-              textInputAction: TextInputAction.next,
-            ),
 
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-                border: InputBorder.none,
-                hintText: "Confirm password",
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  border: InputBorder.none,
+                  hintText: "Confirm password",
+                ),
+                maxLength: 32,
+                style: TextStyle(fontSize: 24),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                onSubmitted: (value){
+                  _submitForm();
+                },
+                textInputAction: TextInputAction.next,
               ),
-              maxLength: 32,
-              style: TextStyle(fontSize: 24),
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              onSubmitted: (value){
-                _submitForm();
-              },
-              textInputAction: TextInputAction.next,
-            ),
 
-            RaisedButton(
-              onPressed: () {
-                _submitForm();
-                /*Fluttertoast.showToast(
+              RaisedButton(
+                onPressed: () {
+
+                  _registerFormLoading ? null : _submitForm();
+
+                  setState(() {
+                    _registerFormLoading = true;
+                  });
+
+
+                  /*Fluttertoast.showToast(
                     msg: "Complete...",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
@@ -244,15 +304,30 @@ class _SignupFragmentState extends State<SignupFragment> {
                     textColor: Colors.white,
                     fontSize: 16.0);
                 Navigator.pop(context);*/
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)),
-              child: Text("Create Account"),
-              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
-            ),
-          ],
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.red)),
+                child: Text("Create Account"),
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+              ),
+            ],
+          ),
         ),
+
+        Visibility(
+          visible: _registerFormLoading,
+          child: Container(
+            child: Center(
+              child: SizedBox(
+                  height: 30.0,
+                  width: 30.0,
+                  child: CircularProgressIndicator()
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -79,9 +79,9 @@ class _LoginFragmentState extends State<LoginFragment> {
       });
     }
     else{
-      // Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (r) => false);
-      Navigator.pop(context);  // pop current page
-      Navigator.pushNamed(context, "/main");
+      Navigator.pushNamedAndRemoveUntil(context, "/main_screen", (r) => false);
+      /*Navigator.pop(context);  // pop current page
+      Navigator.pushNamed(context, "/main");*/
     }
   }
 

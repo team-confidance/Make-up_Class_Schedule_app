@@ -10,6 +10,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
         //width: MediaQuery.of(context).size.width,
         width: double.infinity,
         // decoration: BoxDecoration(color: Color(0xFFA0D0FF)),

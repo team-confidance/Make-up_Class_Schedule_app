@@ -97,141 +97,134 @@ class _SignupFragmentState extends State<SignupFragment> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-            children: [
-              Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "First name",
-                    ),
-                    maxLength: 20,
-                    style: TextStyle(fontSize: 24),
-                    onChanged: (value){
-                      _registerFirstName = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "Last name",
-                    ),
-                    maxLength: 20,
-                    style: TextStyle(fontSize: 24),
-                    onChanged: (value){
-                      _registerLastName = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "Email Address",
-                    ),
-                    maxLength: 50,
-                    style: TextStyle(fontSize: 24),
-                    onChanged: (value){
-                      _registerEmail = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                  /*TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "Phone Number",
-                    ),
-                    maxLength: 14,
-                    style: TextStyle(fontSize: 24),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value){
-                      _registerPhoneNumber = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),*/
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "Password",
-                    ),
-                    maxLength: 32,
-                    style: TextStyle(fontSize: 24),
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    onChanged: (value){
-                      _registerPassword = value;
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-
-
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: InputBorder.none,
-                      hintText: "Confirm password",
-                    ),
-                    maxLength: 32,
-                    style: TextStyle(fontSize: 24),
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    onSubmitted: (value){
-                      _submitForm();
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                ],
+      child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "First name",
               ),
-
-              RaisedButton(
-                onPressed: () {
-                  _submitForm();
-                  /*Fluttertoast.showToast(
-                      msg: "Complete...",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blueAccent,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                  Navigator.pop(context);*/
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)),
-                child: Text("Create Account"),
-                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+              maxLength: 20,
+              style: TextStyle(fontSize: 24),
+              onChanged: (value){
+                _registerFirstName = value;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Last name",
               ),
-            ],
-          ),
-      )
+              maxLength: 20,
+              style: TextStyle(fontSize: 24),
+              onChanged: (value){
+                _registerLastName = value;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Email Address",
+              ),
+              maxLength: 50,
+              style: TextStyle(fontSize: 24),
+              onChanged: (value){
+                _registerEmail = value;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Phone Number",
+              ),
+              maxLength: 14,
+              style: TextStyle(fontSize: 24),
+              keyboardType: TextInputType.number,
+              onChanged: (value){
+                _registerPhoneNumber = value;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Password",
+              ),
+              maxLength: 32,
+              style: TextStyle(fontSize: 24),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              onChanged: (value){
+                _registerPassword = value;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Confirm password",
+              ),
+              maxLength: 32,
+              style: TextStyle(fontSize: 24),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              onSubmitted: (value){
+                _submitForm();
+              },
+              textInputAction: TextInputAction.next,
+            ),
+
+            RaisedButton(
+              onPressed: () {
+                _submitForm();
+                /*Fluttertoast.showToast(
+                    msg: "Complete...",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.blueAccent,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+                Navigator.pop(context);*/
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.red)),
+              child: Text("Create Account"),
+              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+            ),
+          ],
+        ),
     );
   }
 }

@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var cornarR = 50.0;
   var btnSignUpColor = Color(0xFFFFFFFF);
-  var btnLoginColor = Color(0xFFE4ECF1);
+  var btnLoginColor = Color(0xFFFEACB6);
 
   final tabs=[LoginFragment(), SignupFragment()];
   var pos=0;
@@ -26,75 +26,80 @@ class _LoginScreenState extends State<LoginScreen> {
           centerTitle: true,
         ),
         body: Container(
+          height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.only(left: 20, right: 20, top: 50),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      print("Clicked Login");
-                      setState(() {
-                        btnSignUpColor = Color(0xFFFFFFFF);
-                        btnLoginColor = Color(0xFFE4ECF1);
-                        pos=0;
-                      });
-                    },
-                    child: Container(
-                      height: 70,
-                      width: 130,
-                      decoration: BoxDecoration(
-                          color: btnLoginColor,
-                          border: Border.all(color: Colors.black54),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(cornarR),
-                              bottomLeft: Radius.circular(cornarR))),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print("Clicked Login");
+                        setState(() {
+                          btnSignUpColor = Color(0xFFFFFFFF);
+                          btnLoginColor = Color(0xFFFEACB6);
+                          pos=0;
+                        });
+                      },
                       child: Container(
-                        child: Center(
-                            child: Text(
-                          "Login",
-                          style:
-                              TextStyle(color: Color(0xFF707070), fontSize: 24),
-                        )),
+                        height: 70,
+                        width: 130,
+                        decoration: BoxDecoration(
+                            color: btnLoginColor,
+                            border: Border.all(color: Colors.black54),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(cornarR),
+                                bottomLeft: Radius.circular(cornarR))),
+                        child: Container(
+                          child: Center(
+                              child: Text(
+                            "Login",
+                            style:
+                                TextStyle(color: Color(0xFF707070), fontSize: 24),
+                          )),
+                        ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      print("Clicked Signup");
-                      setState(() {
-                        btnSignUpColor = Color(0xFFE4ECF1);
-                        btnLoginColor = Color(0xFFFFFFFF);
-                        pos=1;
-                      });
-                    },
-                    child: Container(
-                      height: 70,
-                      width: 130,
-                      decoration: BoxDecoration(
-                          color: btnSignUpColor,
-                          border: Border.all(color: Colors.black54),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(cornarR),
-                              bottomRight: Radius.circular(cornarR))),
+                    GestureDetector(
+                      onTap: () {
+                        print("Clicked Signup");
+                        setState(() {
+                          btnSignUpColor = Color(0xFFFEACB6);
+                          btnLoginColor = Color(0xFFFFFFFF);
+                          pos=1;
+                        });
+                      },
                       child: Container(
-                        child: Center(
-                            child: Text(
-                          "Sign Up",
-                          style:
-                              TextStyle(color: Color(0xFF707070), fontSize: 24),
-                        )),
+                        height: 70,
+                        width: 130,
+                        decoration: BoxDecoration(
+                            color: btnSignUpColor,
+                            border: Border.all(color: Colors.black54),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(cornarR),
+                                bottomRight: Radius.circular(cornarR))),
+                        child: Container(
+                          child: Center(
+                              child: Text(
+                            "Sign Up",
+                            style:
+                                TextStyle(color: Color(0xFF707070), fontSize: 24),
+                          )),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                  child: tabs[pos]
-              ),
-            ],
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                    child: tabs[pos]
+                ),
+              ],
+            ),
           ),
         ),
       ),

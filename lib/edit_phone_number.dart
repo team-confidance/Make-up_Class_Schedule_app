@@ -74,7 +74,7 @@ class _EditPhoneNumberState extends State<EditPhoneNumber> {
                   ),
                 ],
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   Fluttertoast.showToast(
                       msg: "The number is changed",
@@ -87,11 +87,15 @@ class _EditPhoneNumberState extends State<EditPhoneNumber> {
                   );
                   Navigator.pop(context);
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
                 child: Text("Confirm"),
-                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -96,14 +97,24 @@ class _RoutineScreenState extends State<RoutineScreen> {
           height: _height,
           decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
           padding: EdgeInsets.symmetric(horizontal: 10),
+          /*child: CupertinoDatePicker(
+            initialDateTime: DateTime.now(),
+            onDateTimeChanged: (DateTime newdate) {
+              print(newdate);
+            },
+            use24hFormat: true,
+            maximumDate: new DateTime(2018, 12, 30),
+            minimumYear: 2010,
+            maximumYear: 2018,
+            minuteInterval: 1,
+            mode: CupertinoDatePickerMode.dateAndTime,
+          ),*/
           child: Column(
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(vertical: 20),
             height: 200,
-            child: SfCalendar(
-              view: CalendarView.month,
-            ),
+            child: SfCalendar(view: CalendarView.month,),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

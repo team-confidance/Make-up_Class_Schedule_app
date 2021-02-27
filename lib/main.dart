@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        primaryColor: Colors.white
+        primaryColor: Colors.white,
         //fontFamily: 'Nunito',
       ),
       home: Builder(

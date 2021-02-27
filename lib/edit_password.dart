@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'auth_screen.dart';
 
 class EditPassword extends StatefulWidget {
   @override
@@ -93,23 +90,28 @@ class _EditPasswordState extends State<EditPassword> {
                   ),
                 ],
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   Fluttertoast.showToast(
-                      msg: "The password is changed",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blueAccent,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
+                    msg: "The password is changed",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.blueAccent,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   Navigator.pop(context);
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
                 child: Text("Confirm"),
-                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+                //padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
               ),
             ],
           ),

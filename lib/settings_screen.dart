@@ -75,19 +75,26 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => EditPassword()));
               },
-              shape: RoundedRectangleBorder(
+              /*shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)),
+                  side: BorderSide(color: Colors.red)),*/
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlue,
+                onPrimary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
               child: Text("Change password"),
             ),
           ],
         ),
       ),
-    );;
+    );
   }
 }

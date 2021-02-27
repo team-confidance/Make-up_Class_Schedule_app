@@ -1,10 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/auth_screen.dart';
-import 'package:flutter_app/main.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/auth_screen.dart';
 
 class SignupFragment extends StatefulWidget {
   @override
@@ -24,7 +20,7 @@ class _SignupFragmentState extends State<SignupFragment> {
               child: Text(error),
             ),
             actions: [
-              FlatButton(
+              ElevatedButton(
                 child: Text('Close'),
                 onPressed: (){
                   Navigator.pop(context);
@@ -46,7 +42,7 @@ class _SignupFragmentState extends State<SignupFragment> {
               child: Text("Please varify your email and sign sign in."),
             ),
             actions: [
-              FlatButton(
+              ElevatedButton(
                 child: Text('Close'),
                 onPressed: (){
                   Navigator.pop(context);
@@ -285,32 +281,29 @@ class _SignupFragmentState extends State<SignupFragment> {
                 textInputAction: TextInputAction.next,
               ),
 
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
-
                   _registerFormLoading ? null : _submitForm();
-
                   setState(() {
                     _registerFormLoading = true;
                   });
-
-
-                  /*Fluttertoast.showToast(
-                    msg: "Complete...",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.blueAccent,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);*/
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.red)),
-                child: Text("Create Account"),
-                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: Container(
+                  width: 130,
+                  height: 48,
+                  child: Center(
+                      child: Text("Create Account", style: TextStyle(fontSize: 16),
+                      )),
+                ),
               ),
+              SizedBox(height: 30,)
             ],
           ),
         ),

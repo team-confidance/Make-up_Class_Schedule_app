@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/home_screen.dart';
-import 'package:flutter_app/auth_screen.dart';
 import 'package:flutter_app/notification_screen.dart';
 import 'package:flutter_app/routine_screen.dart';
 import 'package:flutter_app/settings_screen.dart';

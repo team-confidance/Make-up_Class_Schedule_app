@@ -4,7 +4,7 @@ import 'package:flutter_app/main.dart';
 import 'package:flutter_app/main_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/auth_screen.dart';
+import 'package:flutter/material.dart';
 
 class LoginFragment extends StatefulWidget {
   @override
@@ -14,27 +14,20 @@ class LoginFragment extends StatefulWidget {
 class _LoginFragmentState extends State<LoginFragment> {
   // var _goToMain = false;
 
-  Future<void> _alertDialogBuilder(String error) async{
+  Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
             title: Text("Error"),
             content: Container(
               child: Text(error),
             ),
             actions: [
-              FlatButton(
-                child: Text('Send Varification Again'),
-                onPressed: (){
-                  Navigator.pop(context);
-                  FirebaseAuth.instance.currentUser.sendEmailVerification();
-                },
-              ),
-              FlatButton(
+              ElevatedButton(
                 child: Text('Close'),
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
               ),
@@ -98,7 +91,6 @@ class _LoginFragmentState extends State<LoginFragment> {
   String _loginPassword = "";
   FocusNode _passwordFocusNode;
 
-
   @override
   void initState() {
     _passwordFocusNode = FocusNode();
@@ -111,77 +103,70 @@ class _LoginFragmentState extends State<LoginFragment> {
     super.dispose();
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+        child: Column(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    border: InputBorder.none,
-                    hintText: "Email",
-                  ),
-                  maxLength: 50,
-                  style: TextStyle(fontSize: 24),
-                  onChanged: (value){
-                    _loginEmail = value;
-                  },
-                  textInputAction: TextInputAction.next,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    border: InputBorder.none,
-                    hintText: "Password",
-                  ),
-                  maxLength: 32,
-                  style: TextStyle(fontSize: 24),
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  onChanged: (value){
-                    _loginPassword = value;
-                  },
-                  onSubmitted: (value){
-                    _submitForm();
-                  },
-                ),
-              ],
-            ),
-            RaisedButton(
-              onPressed: () {
-                _submitForm();
-                /*Fluttertoast.showToast(
-                    msg: "The number is changed",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.blueAccent,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);*/
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Email",
+              ),
+              maxLength: 50,
+              style: TextStyle(fontSize: 24),
+              onChanged: (value) {
+                _loginEmail = value;
               },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)),
-              child: Text("Submit"),
-              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: InputBorder.none,
+                hintText: "Password",
+              ),
+              maxLength: 32,
+              style: TextStyle(fontSize: 24),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              onChanged: (value) {
+                _loginPassword = value;
+              },
+              onSubmitted: (value) {
+                _submitForm();
+              },
             ),
           ],
-        )
-    );
+        ),
+        ElevatedButton(
+          onPressed: () {_submitForm();},
+          style: ElevatedButton.styleFrom(
+            primary: Colors.lightBlue,
+            onPrimary: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: Container(
+            width: 130,
+            height: 48,
+            child: Center(
+                child: Text("Submit", style: TextStyle(fontSize: 16),
+            )),
+          ),
+        ),
+      ],
+    ));
   }
 }

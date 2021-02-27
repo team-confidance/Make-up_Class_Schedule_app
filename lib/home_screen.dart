@@ -111,16 +111,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text("Important Notifications"),
                 ),
               ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text("Today's", style: TextStyle(fontSize: 26)),
-                  IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AvailableScreen()));
-                      }),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AvailableScreen()));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 10),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                      child: Icon(Icons.add),
+                    ),
+                  ),
                 ],
               ),
               Expanded(
@@ -128,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: dummyData.length ==0 ? Text("NO ITEM") : ListView.builder(
                   itemCount: dummyData.length,
                   itemBuilder: (context, i) => Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ItemTile(dummyData[i]),
                   ),
                 ),

@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'available_screen.dart';
 import 'model/item_tile.dart';
@@ -83,9 +82,34 @@ class _RoutineScreenState extends State<RoutineScreen> {
       catch(e){
         print("EXCEPTION ===  $e");
       }*/
-      setState(() {
-      });
+      setState(() {});
     });
+  }
+
+  DateTime selectedDate = DateTime.now();
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  var dayName = "";
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        dayName = days[selectedDate.weekday];
+      });
   }
 
   @override
@@ -94,38 +118,51 @@ class _RoutineScreenState extends State<RoutineScreen> {
     var _height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
-          height: _height,
-          decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          /*child: CupertinoDatePicker(
-            initialDateTime: DateTime.now(),
-            onDateTimeChanged: (DateTime newdate) {
-              print(newdate);
-            },
-            use24hFormat: true,
-            maximumDate: new DateTime(2018, 12, 30),
-            minimumYear: 2010,
-            maximumYear: 2018,
-            minuteInterval: 1,
-            mode: CupertinoDatePickerMode.dateAndTime,
-          ),*/
-          child: Column(
+      height: _height,
+      decoration: BoxDecoration(color: Color(0xFFE4ECF1)),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(vertical: 20),
-            height: 200,
-            child: SfCalendar(view: CalendarView.month,),
+            child: GestureDetector(
+              onTap: () {
+                _selectDate(context);
+              },
+              child: Container(
+                width: _width,
+                child: Center(
+                  child: Text(
+                    "${days[selectedDate.weekday]} ${selectedDate.day}-${selectedDate.month}-${selectedDate.year}",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  /*image: DecorationImage(fit: BoxFit.cover,
+                    image: AssetImage("assets/images/text_bg.png",),
+                  ),*/
+                ),
+              ),
+            ),
+            //child: SfCalendar(view: CalendarView.month,),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("18 February", style: TextStyle(fontSize: 26)),
-              IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AvailableScreen()));
-                  }),
+              Text("Routine", style: TextStyle(fontSize: 26)),
+              GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AvailableScreen()));
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                  child: Icon(Icons.add),
+                ),
+              ),
             ],
           ),
           Expanded(

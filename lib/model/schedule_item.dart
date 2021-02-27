@@ -14,6 +14,8 @@ class ScheduleItem {
         endTime = json['endTime'],
         status = json['status'],
         roomNo = json['roomNo'];
+
+
 }
 
 /*

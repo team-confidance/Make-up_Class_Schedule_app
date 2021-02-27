@@ -26,18 +26,18 @@ class _LoginFragmentState extends State<LoginFragment> {
             ),
             actions: [
               FlatButton(
+                child: Text('Send Varification Again'),
+                onPressed: (){
+                  Navigator.pop(context);
+                  FirebaseAuth.instance.currentUser.sendEmailVerification();
+                },
+              ),
+              FlatButton(
                 child: Text('Close'),
                 onPressed: (){
                   Navigator.pop(context);
                 },
               ),
-              /*FlatButton(
-                child: Text('Send Varification Again'),
-                onPressed: (){
-                  FirebaseAuth.instance.currentUser.sendEmailVerification();
-                  Navigator.pop(context);
-                },
-              ),*/
             ],
           );
         }

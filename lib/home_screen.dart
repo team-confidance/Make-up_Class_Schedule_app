@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final database = FirebaseDatabase.instance.reference().child("TodayClass");
+ /* final database = FirebaseDatabase.instance.reference().child("TodayClass");
   List<ScheduleItem> dummyData = [];
 
   @override
@@ -28,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
       dummyData.clear();
       print("DATA...... = .....$data");
       print("VALUES...... = .....$values");
-      /*print("KEYS...... = .....$keys");
-      print("VALUES...... = .....$values");*/
+      *//*print("KEYS...... = .....$keys");
+      print("VALUES...... = .....$values");*//*
 
       for(var value in values){
         print("value = $value");
@@ -38,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
         print("value[courseId] type = ${value["courseId"].runtimeType}");
         // print("value = ${value.courseId}");
 
-        /*Map itemMap = jsonDecode(value);
+        *//*Map itemMap = jsonDecode(value);
         print("itemMap = $itemMap");
-        var item = ScheduleItem.fromJson(itemMap);*/
+        var item = ScheduleItem.fromJson(itemMap);*//*
         // var item = ScheduleItem.fromJson(value);
         // print("ITEM BEFORE = $item");
 
@@ -54,15 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-        /*item.courseId = value.courseId == null ? "" : value.courseId;
+        *//*item.courseId = value.courseId == null ? "" : value.courseId;
         item.endTime = value.endTime == null ? "" : value.endTime;
         item.roomNo = value.roomNo == null ? "" : value.roomNo;
         item.startTime = value.startTime == null ? "" : value.startTime;
-        item.status = value.status == null ? "" : value.status;*/
+        item.status = value.status == null ? "" : value.status;*//*
         print("ITEM = $item");
         dummyData.add(item);
       }
-      /*try{
+      *//*try{
       data.forEach((key, value){
         // if(value != null && key != null){
 
@@ -83,11 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       catch(e){
         print("EXCEPTION ===  $e");
-      }*/
+      }*//*
       setState(() {
       });
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

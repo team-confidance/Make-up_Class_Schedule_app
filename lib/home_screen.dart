@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
       var values = snapshot.value;
       // var keys = snapshot.value.keys;
       dummyData.clear();
-      // print("DATA...... = .....$data");
       print("VALUES...... = .....$values");
       print("value.length = ${values.length}");
       print("value type = ${values.runtimeType}");

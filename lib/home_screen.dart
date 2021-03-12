@@ -17,7 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   print(date.toString()); // prints something like 2019-12-10 10:02:22.287949
   print(DateFormat('EEEE').format(date)); // prints Tuesday*/
 
-  final database = FirebaseDatabase.instance.reference().child("MainSchedule");
+  final mainScheduleDb = FirebaseDatabase.instance.reference().child("MainSchedule");
+  final makeUpScheduleDb = FirebaseDatabase.instance.reference().child("MakeupSchedule");
   List<ScheduleItem> dummyData = [];
 
   @override
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime date = DateTime.now();
     var today = DateFormat('EEEE').format(date);
 
-    database.child(today).child("AAC").once().then((DataSnapshot snapshot){
+    mainScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
       // var data = snapshot.value;
       var values = snapshot.value;
       // var keys = snapshot.value.keys;
@@ -92,6 +93,27 @@ class _HomeScreenState extends State<HomeScreen> {
       catch(e){
         print("EXCEPTION ===  $e");
       }*/
+      setState(() {
+      });
+    });
+
+    today = "${date.day}-${date.month}-${date.year}";
+    print("TODAY: $today");
+    makeUpScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
+      var values = snapshot.value;
+      print("VALUES = $values");
+
+      for(var value in values){
+        var item = ScheduleItem();
+        item.courseId = value["courseId"] == null ? "" : value["courseId"];
+        item.endTime = value["endTime"] == null ? "" : value["endTime"];
+        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
+        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.status = value["status"] == null ? "" : value["status"];
+
+        dummyData.add(item);
+      }
+      print(".............................FINISHED LOOOP!!!");
       setState(() {
       });
     });

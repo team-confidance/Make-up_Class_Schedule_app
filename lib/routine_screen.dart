@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/schedule_item.dart';
-
+import 'package:intl/intl.dart';
 import 'available_screen.dart';
 import 'model/item_tile.dart';
 
@@ -12,37 +12,22 @@ class RoutineScreen extends StatefulWidget {
 }
 
 class _RoutineScreenState extends State<RoutineScreen> {
-  final database = FirebaseDatabase.instance.reference().child("TodayClass");
-
+  final mainScheduleDb = FirebaseDatabase.instance.reference().child("MainSchedule");
+  final makeUpScheduleDb = FirebaseDatabase.instance.reference().child("MakeupSchedule");
   List<ScheduleItem> dummyData = [];
 
   @override
   void initState() {
     super.initState();
-    database.once().then((DataSnapshot snapshot){
-      var data = snapshot.value;
+
+    DateTime date = DateTime.now();
+    var today = DateFormat('EEEE').format(date);
+
+    mainScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
       var values = snapshot.value;
-      // var keys = snapshot.value.keys;
       dummyData.clear();
-      print("DATA...... = .....$data");
-      print("VALUES...... = .....$values");
-      /*print("KEYS...... = .....$keys");
-      print("VALUES...... = .....$values");*/
 
       for(var value in values){
-        print("value = $value");
-        print("value = ${value["courseId"]}");
-        print("value type = ${value.runtimeType}");
-        print("value[courseId] type = ${value["courseId"].runtimeType}");
-        // print("value = ${value.courseId}");
-
-        /*Map itemMap = jsonDecode(value);
-        print("itemMap = $itemMap");
-        var item = ScheduleItem.fromJson(itemMap);*/
-        // var item = ScheduleItem.fromJson(value);
-        // print("ITEM BEFORE = $item");
-
-
         var item = ScheduleItem();
         item.courseId = value["courseId"] == null ? "" : value["courseId"];
         item.endTime = value["endTime"] == null ? "" : value["endTime"];
@@ -50,39 +35,30 @@ class _RoutineScreenState extends State<RoutineScreen> {
         item.startTime = value["startTime"] == null ? "" : value["startTime"];
         item.status = value["status"] == null ? "" : value["status"];
 
-
-
-        /*item.courseId = value.courseId == null ? "" : value.courseId;
-        item.endTime = value.endTime == null ? "" : value.endTime;
-        item.roomNo = value.roomNo == null ? "" : value.roomNo;
-        item.startTime = value.startTime == null ? "" : value.startTime;
-        item.status = value.status == null ? "" : value.status;*/
-        print("ITEM = $item");
         dummyData.add(item);
       }
-      /*try{
-      data.forEach((key, value){
-        // if(value != null && key != null){
+      print(".............................FINISHED LOOOP!!!");
+      setState(() {
+      });
+    });
 
-        print("ss5...............................................");
-        print("ss5...............................................");
-        ScheduleItem item = ScheduleItem(
-          courseId: value['courseId'],
-          startTime: value['startTime'],
-          endTime: value['endTime'],
-          status: value['status'],
-          roomNo: value['roomNo'],
-        );
+    today = "${date.day}-${date.month}-${date.year}";
+    makeUpScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
+      var values = snapshot.value;
+
+      for(var value in values){
+        var item = ScheduleItem();
+        item.courseId = value["courseId"] == null ? "" : value["courseId"];
+        item.endTime = value["endTime"] == null ? "" : value["endTime"];
+        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
+        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.status = value["status"] == null ? "" : value["status"];
 
         dummyData.add(item);
-        }
-      // }
-      );
       }
-      catch(e){
-        print("EXCEPTION ===  $e");
-      }*/
-      setState(() {});
+      print(".............................FINISHED LOOOP!!!");
+      setState(() {
+      });
     });
   }
 
@@ -109,7 +85,50 @@ class _RoutineScreenState extends State<RoutineScreen> {
       setState(() {
         selectedDate = picked;
         dayName = days[selectedDate.weekday];
+        _resetData(dayName, selectedDate);
       });
+  }
+
+  void _resetData(String today, DateTime selectedDate) {
+    dummyData.clear();
+
+    mainScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
+      var values = snapshot.value;
+      dummyData.clear();
+
+      for(var value in values){
+        var item = ScheduleItem();
+        item.courseId = value["courseId"] == null ? "" : value["courseId"];
+        item.endTime = value["endTime"] == null ? "" : value["endTime"];
+        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
+        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.status = value["status"] == null ? "" : value["status"];
+
+        dummyData.add(item);
+      }
+      print(".............................FINISHED LOOOP!!!");
+      setState(() {
+      });
+    });
+
+    today = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+    makeUpScheduleDb.child(today).child("AAC").once().then((DataSnapshot snapshot){
+      var values = snapshot.value;
+
+      for(var value in values){
+        var item = ScheduleItem();
+        item.courseId = value["courseId"] == null ? "" : value["courseId"];
+        item.endTime = value["endTime"] == null ? "" : value["endTime"];
+        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
+        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.status = value["status"] == null ? "" : value["status"];
+
+        dummyData.add(item);
+      }
+      print(".............................FINISHED LOOOP!!!");
+      setState(() {
+      });
+    });
   }
 
   @override

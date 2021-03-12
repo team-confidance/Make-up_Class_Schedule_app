@@ -20,7 +20,7 @@ class ScheduleItem {
 }
 
 
-List<ScheduleItem> dummyData=[
+/*List<ScheduleItem> dummyData=[
   ScheduleItem(courseId: "CSE-2211",courseName: "Introduction to Computer",startTime: "10:30AM",endTime: "12:00PM",status:"Upcoming", roomNo: "309"),
   ScheduleItem(courseId: "EEE-1233",courseName: "Electric & Electronics I",startTime: "11:30AM",endTime: "01:00PM",status:"Upcoming", roomNo: "309"),
   ScheduleItem(courseId: "PHY-2211",courseName: "Fundamentals of Physics",startTime: "12:30PM",endTime: "02:00PM",status:"Running", roomNo: "309"),
@@ -38,4 +38,4 @@ List<ScheduleItem> dummyData=[
   ScheduleItem(courseId: "ENG-2211",courseName: "Introduction to Speaking English",startTime: "03:30PM",endTime: "05:00PM",status:"Running", roomNo: "309"),
   ScheduleItem(courseId: "ENG-2211",courseName: "Introduction to Writing English",startTime: "03:30PM",endTime: "05:00PM",status:"Upcoming", roomNo: "309"),
   ScheduleItem(courseId: "ENG-2211",courseName: "Introduction to Reading English",startTime: "03:30PM",endTime: "05:00PM",status:"Canceled", roomNo: "309"),
-];
+];*/

@@ -1,6 +1,3 @@
-//ignore: avoid_web_libraries_in_flutter
-// import "dart:html";
-
 import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -8,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/available_screen.dart';
 import 'package:flutter_app/model/item_tile.dart';
 import 'package:flutter_app/model/schedule_item.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,32 +13,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- /* final database = FirebaseDatabase.instance.reference().child("TodayClass");
+  /*var date = DateTime.now();
+  print(date.toString()); // prints something like 2019-12-10 10:02:22.287949
+  print(DateFormat('EEEE').format(date)); // prints Tuesday*/
+
+  final database = FirebaseDatabase.instance.reference().child("MainSchedule");
   List<ScheduleItem> dummyData = [];
 
   @override
   void initState() {
     super.initState();
-    database.once().then((DataSnapshot snapshot){
-      var data = snapshot.value;
+
+    DateTime date = DateTime.now();
+    var today = DateFormat('EEEE').format(date);
+
+    database.child(today).child("AAC").once().then((DataSnapshot snapshot){
+      // var data = snapshot.value;
       var values = snapshot.value;
       // var keys = snapshot.value.keys;
       dummyData.clear();
-      print("DATA...... = .....$data");
+      // print("DATA...... = .....$data");
       print("VALUES...... = .....$values");
-      *//*print("KEYS...... = .....$keys");
-      print("VALUES...... = .....$values");*//*
+      print("value.length = ${values.length}");
+      print("value type = ${values.runtimeType}");
+      /*print("KEYS...... = .....$keys");
+      print("VALUES...... = .....$values");*/
 
       for(var value in values){
         print("value = $value");
-        print("value = ${value["courseId"]}");
+        print("value[courseId] = ${value["courseId"]}");
         print("value type = ${value.runtimeType}");
         print("value[courseId] type = ${value["courseId"].runtimeType}");
         // print("value = ${value.courseId}");
 
-        *//*Map itemMap = jsonDecode(value);
-        print("itemMap = $itemMap");
-        var item = ScheduleItem.fromJson(itemMap);*//*
+        // Map itemMap = jsonDecode(value);
+        // print("itemMap = $itemMap");
+        // var item = ScheduleItem.fromJson(itemMap);
         // var item = ScheduleItem.fromJson(value);
         // print("ITEM BEFORE = $item");
 
@@ -54,15 +62,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-        *//*item.courseId = value.courseId == null ? "" : value.courseId;
+        /*item.courseId = value.courseId == null ? "" : value.courseId;
         item.endTime = value.endTime == null ? "" : value.endTime;
         item.roomNo = value.roomNo == null ? "" : value.roomNo;
         item.startTime = value.startTime == null ? "" : value.startTime;
-        item.status = value.status == null ? "" : value.status;*//*
-        print("ITEM = $item");
+        item.status = value.status == null ? "" : value.status;
+        print("ITEM = $item");*/
         dummyData.add(item);
       }
-      *//*try{
+      print(".............................FINISHED LOOOP!!!");
+      /*try{
       data.forEach((key, value){
         // if(value != null && key != null){
 
@@ -83,11 +92,11 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       catch(e){
         print("EXCEPTION ===  $e");
-      }*//*
+      }*/
       setState(() {
       });
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

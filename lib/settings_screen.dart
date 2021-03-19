@@ -1,11 +1,22 @@
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:excel/excel.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/edit_password.dart';
 
 import 'edit_phone_number.dart';
+import 'create_new_user_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String _fileName = "";
+  bool _isFilePicked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +73,10 @@ class SettingsScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           print("Edit Button Clicked");
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => EditPhoneNumber()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditPhoneNumber()));
                         },
                         child: Text(
                           "Edit",
@@ -77,8 +90,8 @@ class SettingsScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => EditPassword()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditPassword()));
               },
               /*shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -91,6 +104,96 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               child: Text("Change password"),
+            ),
+            Visibility(
+              child: Text(_fileName),
+              visible: _isFilePicked,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: ()  {
+                    print("UPLOAD ROUTINE button pressed");
+                    /*try{
+                      FilePickerResult result = await FilePicker.platform.pickFiles();
+
+                      if(result != null) {
+                        PlatformFile file = result.files.first;
+
+                        setState(() {
+                          _fileName = file.name.toString();
+                          _isFilePicked = true;
+                         *//* _byte = file.bytes.toString();
+                          _size = file.size.toString();
+                          _extension = file.extension.toString();
+                          _path = file.path.toString();*//*
+                        });
+
+                        print(file.name);
+                        print(file.bytes);
+                        print(file.size);
+                        print(file.extension);
+                        print(file.path);
+
+
+
+                        var mPath = file.path;
+                        var bytes = File(mPath).readAsBytesSync();
+                        var excel = Excel.decodeBytes(bytes);
+
+                        for (var table in excel.tables.keys) {
+                          print("TABLE = $table"); //sheet Name
+                          print("Max COL = " + excel.tables[table].maxCols.toString());
+                          print("MAX ROW = " + excel.tables[table].maxRows.toString());
+                          for (var row in excel.tables[table].rows) {
+                            print("...............ROW = $row");
+                            print("ROW.type = ${row.runtimeType}   ROW.size = ${row.length}");
+                          }
+                        }
+
+                      } else {
+                        // User canceled the picker
+                      }
+                    }
+                    catch(e){
+                      print(">>>>>>>..........>>>>>>>>EXCEPTION : $e");
+                    }*/
+                  },
+                  /*shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.red)),*/
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightBlue,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                  ),
+                  child: Text("Upload Routine"),
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    print("CREATE USER button pressed");
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CreateUser()));
+                  },
+                  /*shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.red)),*/
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightBlue,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                  ),
+                  child: Text("Create New User"),
+                ),
+              ],
             ),
           ],
         ),

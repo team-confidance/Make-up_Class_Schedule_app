@@ -21,41 +21,68 @@ class _AvailableScreenState extends State<AvailableScreen> {
     DateTime date = DateTime.now();
     var today = DateFormat('EEEE').format(date);
 
-    availableRoomDb.child(today).once().then((DataSnapshot snapshot){
-      var values = snapshot.value;
-      print("AVAILABLE values = ${values}");
-      dummyData.clear();
+    try{
+      availableRoomDb.child(today).once().then((DataSnapshot snapshot){
+        var values = snapshot.value;
+        print("AVAILABLE values = ${values}");
+        dummyData.clear();
 
-      for(var value in values){
-        var item = AvailableItem();
-        item.endTime = value["endTime"] == null ? "" : value["endTime"];
-        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
-        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        try{
+          var length = values.length;
+          print("LENGTH = $length");
+          for(var i=0; i<length; i++){
+            var item = AvailableItem();
+            item.endTime = values[i]["endTime"] == null ? "" : values[i]["endTime"];
+            item.roomNo = values[i]["roomNo"] == null ? "" : values[i]["roomNo"];
+            item.startTime = values[i]["startTime"] == null ? "" : values[i]["startTime"];
+            item.status = values[i]["status"] == null ? "" : values[i]["status"];
 
-        dummyData.add(item);
-      }
-      print(".............................FINISHED LOOOP!!!");
-      setState(() {
+            dummyData.add(item);
+          }
+        }
+        catch(e){
+          print("AVAILABLE CLASSES INNER ERROR1 = $e");
+        }
+        print(".............................FINISHED LOOOP!!!");
+        setState(() {
+        });
       });
-    });
+    }
+    catch(e){
+      print("AVAILABLE CLASSES: OUTSIDE ERROR1 = $e");
+    }
 
     today = "${date.day}-${date.month}-${date.year}";
-    bookedRoomsDb.child(today).once().then((DataSnapshot snapshot){
-      var values = snapshot.value;
-      print("BOOKED values = $values");
+    try{
+      bookedRoomsDb.child(today).once().then((DataSnapshot snapshot){
+        var values = snapshot.value;
+        print("BOOKED values = $values");
 
-      for(var value in values){
-        var item = AvailableItem();
-        item.endTime = value["endTime"] == null ? "" : value["endTime"];
-        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
-        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        try{
+          var length = values.length;
+          print("LENGTH = $length");
+          for(var i=0; i<length; i++){
+            var item = AvailableItem();
+            item.endTime = values[i]["endTime"] == null ? "" : values[i]["endTime"];
+            item.roomNo = values[i]["roomNo"] == null ? "" : values[i]["roomNo"];
+            item.startTime = values[i]["startTime"] == null ? "" : values[i]["startTime"];
+            item.status = values[i]["status"] == null ? "" : values[i]["status"];
 
-        dummyData.remove(item);
-      }
-      print(".............................FINISHED LOOOP!!!");
-      setState(() {
+            dummyData.remove(item);
+          }
+        }
+        catch(e){
+          print("AVAILABLE CLASSES INNER ERROR2 = $e");
+        }
+
+        print(".............................FINISHED LOOOP!!!");
+        setState(() {
+        });
       });
-    });
+    }
+    catch(e){
+      print("AVAILABLE CLASSES OUTSIDE ERROR2 = $e");
+    }
   }
 
   DateTime selectedDate = DateTime.now();
@@ -92,11 +119,14 @@ class _AvailableScreenState extends State<AvailableScreen> {
       var values = snapshot.value;
       dummyData.clear();
 
-      for(var value in values){
+      var length = values.length;
+      print("LENGTH = $length");
+      for(var i=0; i<length; i++){
         var item = AvailableItem();
-        item.endTime = value["endTime"] == null ? "" : value["endTime"];
-        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
-        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.endTime = values[i]["endTime"] == null ? "" : values[i]["endTime"];
+        item.roomNo = values[i]["roomNo"] == null ? "" : values[i]["roomNo"];
+        item.startTime = values[i]["startTime"] == null ? "" : values[i]["startTime"];
+        item.status = values[i]["status"] == null ? "" : values[i]["status"];
 
         dummyData.add(item);
       }
@@ -109,11 +139,14 @@ class _AvailableScreenState extends State<AvailableScreen> {
     bookedRoomsDb.child(today).once().then((DataSnapshot snapshot){
       var values = snapshot.value;
 
-      for(var value in values){
+      var length = values.length;
+      print("LENGTH = $length");
+      for(var i=0; i<length; i++){
         var item = AvailableItem();
-        item.endTime = value["endTime"] == null ? "" : value["endTime"];
-        item.roomNo = value["roomNo"] == null ? "" : value["roomNo"];
-        item.startTime = value["startTime"] == null ? "" : value["startTime"];
+        item.endTime = values[i]["endTime"] == null ? "" : values[i]["endTime"];
+        item.roomNo = values[i]["roomNo"] == null ? "" : values[i]["roomNo"];
+        item.startTime = values[i]["startTime"] == null ? "" : values[i]["startTime"];
+        item.status = values[i]["status"] == null ? "" : values[i]["status"];
 
         dummyData.remove(item);
       }
@@ -127,6 +160,7 @@ class _AvailableScreenState extends State<AvailableScreen> {
   Widget build(BuildContext context) {
     var _width = MediaQuery.of(context).size.width;
     var _height = MediaQuery.of(context).size.height;
+    print("AVAILABLE SCREEN : dummyDATA = $dummyData");
     return Scaffold(
         appBar: AppBar(
           title: Text("Available Rooms"),

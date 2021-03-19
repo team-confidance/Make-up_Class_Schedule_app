@@ -11,6 +11,7 @@ class AvailableItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("AVAILABLE ITEM TILE: dummyData = $dummyData");
     return Container(
       padding: EdgeInsets.fromLTRB(10,10,0,10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
@@ -20,7 +21,7 @@ class AvailableItemTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Room-${dummyData.roomNo.toString()}", style: TextStyle(fontSize: 20)),
+              Text("Room - " + dummyData.roomNo.toString(), style: TextStyle(fontSize: 20)),
               SizedBox(height: 10),
               Row(
                 children: [
@@ -28,7 +29,7 @@ class AvailableItemTile extends StatelessWidget {
                   Text(" " + dummyData.startTime.toString() + " - " + dummyData.endTime.toString()+"    ",style: TextStyle(color: Colors.grey)),
                   Icon(Icons.stacked_bar_chart, color: Color(0xFFA6BECB),size: 14,),
                   Text(
-                    " +${dummyData.status}",
+                    " "+dummyData.status.toString(),
                     style: TextStyle(
                         color: statusColorOf(dummyData.status),
                         fontWeight: FontWeight.bold),
